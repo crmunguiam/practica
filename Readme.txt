@@ -36,7 +36,7 @@ body:
  "birthdate": 292948281010183
  }
  
- metodo: Post
+ metodo: Get
  localhost:8091/v1/users/list?nombre=Diego Ivan
  
  KEY: nombre
