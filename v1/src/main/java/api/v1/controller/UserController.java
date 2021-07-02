@@ -1,6 +1,7 @@
 package api.v1.controller;
 
 import api.v1.json.Items;
+import api.v1.json.UserRequest;
 import api.v1.util.ErrorMessage;
 import api.v1.json.UserResponse;
 import api.v1.entity.User;
@@ -45,7 +46,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/saveOrUpdate", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
-    public ResponseEntity<UserResponse> createProduct(@Valid @RequestBody User user, BindingResult result) {
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest user, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
         }

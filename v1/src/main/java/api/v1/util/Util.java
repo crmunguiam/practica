@@ -18,10 +18,15 @@ public class Util {
     }
 
 
-    public static  Date formatFecha(String fecha) throws ParseException {
+    public static  Date formatFecha(String fecha)  {
         String fechaF =devuelveFormatoFecha( fecha);
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-        Date date = format.parse(fechaF);
+        Date date = null;
+        try {
+            date = format.parse(fechaF);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         System.out.println(date);
         return date;
     }

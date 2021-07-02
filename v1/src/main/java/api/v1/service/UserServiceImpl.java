@@ -1,11 +1,9 @@
 package api.v1.service;
 
 import api.v1.entity.User;
-import api.v1.json.Items;
-import api.v1.json.Profile;
-import api.v1.json.UserListResponse;
-import api.v1.json.Workshift;
+import api.v1.json.*;
 import api.v1.repository.UserRepository;
+import api.v1.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,25 +64,35 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User createUser(User user) {
-        user.setBirthdate(new Date());
+    public User createUser(UserRequest userRequest) {
 
-        if(user.getId()!=null) {
-            User userDB =getUser(user.getId());
+
+        if(userRequest.getId()!=null) {
+            User userDB =getUser(userRequest.getId());
             if (null != userDB) {
-                userDB.setName(user.getName());
-                userDB.setBirthdate(user.getBirthdate());
-                userDB.setGender(user.getGender());
-                userDB.setLastName(user.getLastName());
-                userDB.setPhone(user.getPhone());
-                userDB.setPin(user.getPin());
-                userDB.setRfc(user.getRfc());
-                userDB.setWorshift(user.getWorshift());
-                userDB.setSurname(user.getSurname());
+                userDB.setBirthdate(Util.formatFecha(userRequest.getBirthdate()));
+                userDB.setName(userRequest.getName());
+                userDB.setGender(userRequest.getGender());
+                userDB.setLastName(userRequest.getLastName());
+                userDB.setPhone(userRequest.getPhone());
+                userDB.setPin(userRequest.getPin());
+                userDB.setRfc(userRequest.getRfc());
+                userDB.setWorshift(userRequest.getWorshift());
+                userDB.setSurname(userRequest.getSurname());
                 return userRepository.save(userDB);
             }
         }else{
-            return userRepository.save(user);
+            User userDB = new User();
+            userDB.setBirthdate(Util.formatFecha(userRequest.getBirthdate()));
+            userDB.setName(userRequest.getName());
+            userDB.setGender(userRequest.getGender());
+            userDB.setLastName(userRequest.getLastName());
+            userDB.setPhone(userRequest.getPhone());
+            userDB.setPin(userRequest.getPin());
+            userDB.setRfc(userRequest.getRfc());
+            userDB.setWorshift(userRequest.getWorshift());
+            userDB.setSurname(userRequest.getSurname());
+            return userRepository.save(userDB);
 
         }
         return null;
